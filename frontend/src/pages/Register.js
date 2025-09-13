@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -38,6 +40,9 @@ const Register = () => {
       </form>
       {error && <div className="error">{error}</div>}
       {success && <div className="success">{success}</div>}
+      <div className="auth-link">
+        <p>Already have an account? <button onClick={() => navigate('/login')} className="link-button">Login here</button></p>
+      </div>
     </div>
   );
 };
