@@ -19,12 +19,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Quiet favicon requests
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
-// Simple root message so / doesn't 404
-app.get('/', (req, res) => res.json({ service: 'Mini CRM API', status: 'ok' }));
-
 // Quick app-level pings to verify path
 app.get('/ping', (req, res) => res.json({ ok: true, at: '/ping' }));
 app.get('/api/ping', (req, res) => res.json({ ok: true, at: '/api/ping' }));

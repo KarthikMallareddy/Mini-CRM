@@ -16,10 +16,10 @@ router.use((req, res, next) => {
 router.get('/ping', (req, res) => res.json({ ok: true, at: '/api/auth/ping (router)' }));
 
 // Register new user
-router.post("/register", validateRequest(registerSchema), registerUser);
+router.post("/register", registerUser);
 
 // Login user
-router.post("/login", validateRequest(loginSchema), loginUser);
+router.post("/login", loginUser);
 
 // Get logged-in user profile
 router.get("/me", protect, getMe);

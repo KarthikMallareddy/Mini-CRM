@@ -19,17 +19,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Quiet favicon requests
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
-// Simple root message so / doesn't 404
-app.get('/', (req, res) => res.json({ service: 'Mini CRM API', status: 'ok' }));
-
-// Quick app-level pings to verify path
-app.get('/ping', (req, res) => res.json({ ok: true, at: '/ping' }));
-app.get('/api/ping', (req, res) => res.json({ ok: true, at: '/api/ping' }));
-app.get('/api/auth/ping', (req, res) => res.json({ ok: true, at: '/api/auth/ping (app)' }));
-
 // Test route
 app.get("/test", (req, res) => {
   res.json({ message: "Server is working!" });
@@ -54,10 +43,38 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+function listRoutes(appInstance) {
+  const routes = [];
+  appInstance._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      // Routes registered directly on the app
+      const methods = Object.keys(middleware.route.methods)
+        .filter((m) => middleware.route.methods[m])
+        .map((m) => m.toUpperCase())
+        .join(',');
+      routes.push(`${methods} ${middleware.route.path}`);
+    } else if (middleware.name === 'router' && middleware.handle.stack) {
+      // Router middleware
+      middleware.handle.stack.forEach((handler) => {
+        const route = handler.route;
+        if (route) {
+          const methods = Object.keys(route.methods)
+            .filter((m) => route.methods[m])
+            .map((m) => m.toUpperCase())
+            .join(',');
+          routes.push(`${methods} ${middleware.regexp} ${route.path}`);
+        }
+      });
+    }
+  });
+  console.log('Registered routes:\n' + routes.join('\n'));
+}
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected");
+    listRoutes(app);
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch((err) => console.error(err));
