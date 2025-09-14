@@ -1,14 +1,13 @@
 import React from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const isAuthenticated = !!localStorage.getItem('token');
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem('token');
     navigate('/login');
   };
 

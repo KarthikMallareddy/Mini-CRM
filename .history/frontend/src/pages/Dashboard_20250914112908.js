@@ -20,7 +20,6 @@ const Dashboard = () => {
   useEffect(() => {
     fetchCustomers();
     fetchStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, searchTerm]);
 
   const fetchCustomers = async () => {
@@ -80,57 +79,27 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <div className="container">
-        <div className="dashboard-header">
-          <h1 className="dashboard-title">CRM Dashboard</h1>
-          <p className="text-muted">Manage your customers and leads efficiently</p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon customers">👥</div>
-            <div className="stat-value">{stats.totalCustomers}</div>
-            <div className="stat-label">Total Customers</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon leads">📊</div>
-            <div className="stat-value">{stats.totalLeads}</div>
-            <div className="stat-label">Total Leads</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon leads">🔥</div>
-            <div className="stat-value">{stats.activeLeads}</div>
-            <div className="stat-label">Active Leads</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon revenue">✅</div>
-            <div className="stat-value">{stats.convertedLeads}</div>
-            <div className="stat-label">Converted</div>
+      <h1>CRM Dashboard</h1>
+      <div className="dashboard-content">
+        <div className="customers-section">
+          <CustomerList 
+            customers={customers} 
+            onSelectCustomer={setSelectedCustomer}
+            onCustomersChange={fetchCustomers}
+            searchTerm={searchTerm}
+            onSearchChange={(v) => { setPage(1); setSearchTerm(v); }}
+          />
+          <div className="pagination">
+            <button disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Prev</button>
+            <span>Page {page} of {totalPages}</span>
+            <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
           </div>
         </div>
-
-        <div className="dashboard-content">
-          <div className="customers-section">
-            <CustomerList 
-              customers={customers} 
-              onSelectCustomer={setSelectedCustomer}
-              onCustomersChange={fetchCustomers}
-              searchTerm={searchTerm}
-              onSearchChange={(v) => { setPage(1); setSearchTerm(v); }}
-            />
-            <div className="pagination">
-              <button disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Prev</button>
-              <span>Page {page} of {totalPages}</span>
-              <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
-            </div>
+        {selectedCustomer && (
+          <div className="leads-section">
+            <LeadList customerId={selectedCustomer._id || selectedCustomer.id} />
           </div>
-          {selectedCustomer && (
-            <div className="leads-section">
-              <LeadList customerId={selectedCustomer._id || selectedCustomer.id} />
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

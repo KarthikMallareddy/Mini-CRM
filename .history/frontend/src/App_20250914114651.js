@@ -4,11 +4,10 @@ import { Navbar, CustomerDetail } from './components';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Reports from './pages/Reports';
-import { useAuth } from './context/AuthContext';
+// import Reports from './pages/Reports';
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = !!localStorage.getItem('token');
 
   return (
     <Router>

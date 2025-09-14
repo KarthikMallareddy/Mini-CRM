@@ -5,10 +5,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Reports from './pages/Reports';
-import { useAuth } from './context/AuthContext';
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = !!localStorage.getItem('token');
 
   return (
     <Router>
@@ -25,10 +24,10 @@ function App() {
           path="/customers/:id" 
           element={isAuthenticated ? <CustomerDetail /> : <Navigate to="/login" />} 
         />
-        <Route 
+        {/* <Route 
           path="/reports" 
           element={isAuthenticated ? <Reports /> : <Navigate to="/login" />} 
-        />
+        /> */}
       </Routes>
     </Router>
   );

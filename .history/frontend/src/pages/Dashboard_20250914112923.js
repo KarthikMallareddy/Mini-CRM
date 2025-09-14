@@ -20,7 +20,6 @@ const Dashboard = () => {
   useEffect(() => {
     fetchCustomers();
     fetchStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, searchTerm]);
 
   const fetchCustomers = async () => {

@@ -14,7 +14,6 @@ const LeadList = ({ customerId }) => {
   const [editingId, setEditingId] = useState(null);
   const [editDraft, setEditDraft] = useState({ title: '', description: '', status: 'New', value: '' });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (customerId) {
       fetchLeads();
@@ -182,71 +181,49 @@ const LeadList = ({ customerId }) => {
           <div key={lead._id} className="lead-card">
             {editingId === lead._id ? (
               <div className="lead-edit-form">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-input"
-                    placeholder="Lead Title"
-                    value={editDraft.title}
-                    onChange={(e) => setEditDraft({ ...editDraft, title: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <textarea
-                    className="form-textarea"
-                    placeholder="Description"
-                    value={editDraft.description}
-                    onChange={(e) => setEditDraft({ ...editDraft, description: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="number"
-                    className="form-input"
-                    placeholder="Value"
-                    value={editDraft.value}
-                    onChange={(e) => setEditDraft({ ...editDraft, value: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <select
-                    className="form-select"
-                    value={editDraft.status}
-                    onChange={(e) => setEditDraft({ ...editDraft, status: e.target.value })}
-                  >
-                    <option value="New">New</option>
-                    <option value="Contacted">Contacted</option>
-                    <option value="Converted">Converted</option>
-                    <option value="Lost">Lost</option>
-                  </select>
-                </div>
+                <input
+                  type="text"
+                  placeholder="Lead Title"
+                  value={editDraft.title}
+                  onChange={(e) => setEditDraft({ ...editDraft, title: e.target.value })}
+                />
+                <textarea
+                  placeholder="Description"
+                  value={editDraft.description}
+                  onChange={(e) => setEditDraft({ ...editDraft, description: e.target.value })}
+                />
+                <input
+                  type="number"
+                  placeholder="Value"
+                  value={editDraft.value}
+                  onChange={(e) => setEditDraft({ ...editDraft, value: e.target.value })}
+                />
+                <select
+                  value={editDraft.status}
+                  onChange={(e) => setEditDraft({ ...editDraft, status: e.target.value })}
+                >
+                  <option value="New">New</option>
+                  <option value="Contacted">Contacted</option>
+                  <option value="Converted">Converted</option>
+                  <option value="Lost">Lost</option>
+                </select>
                 <div className="actions">
-                  <button 
-                    className="btn btn-success btn-sm"
-                    onClick={async () => {
-                      try {
-                        const token = localStorage.getItem('token');
-                        const res = await fetch(`/api/leads/${lead._id}`, {
-                          method: 'PUT',
-                          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                          body: JSON.stringify(editDraft)
-                        });
-                        if (!res.ok) throw new Error('Failed to update lead');
-                        setEditingId(null);
-                        fetchLeads();
-                      } catch (err) {
-                        alert(err.message);
-                      }
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button 
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => setEditingId(null)}
-                  >
-                    Cancel
-                  </button>
+                  <button onClick={async () => {
+                    try {
+                      const token = localStorage.getItem('token');
+                      const res = await fetch(`/api/leads/${lead._id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify(editDraft)
+                      });
+                      if (!res.ok) throw new Error('Failed to update lead');
+                      setEditingId(null);
+                      fetchLeads();
+                    } catch (err) {
+                      alert(err.message);
+                    }
+                  }}>Save</button>
+                  <button onClick={() => setEditingId(null)}>Cancel</button>
                 </div>
               </div>
             ) : (
@@ -256,7 +233,6 @@ const LeadList = ({ customerId }) => {
                 <p>Value: ${lead.value}</p>
                 <div className="lead-status">
                   <select
-                    className="form-select status-select"
                     value={lead.status}
                     onChange={(e) => updateLeadStatus(lead._id, e.target.value)}
                   >
@@ -267,18 +243,8 @@ const LeadList = ({ customerId }) => {
                   </select>
                 </div>
                 <div className="actions">
-                  <button 
-                    className="btn btn-warning btn-sm"
-                    onClick={() => { setEditingId(lead._id); setEditDraft({ title: lead.title || '', description: lead.description || '', status: lead.status || 'New', value: lead.value || '' }); }}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    className="btn btn-danger btn-sm"
-                    onClick={() => deleteLead(lead._id)}
-                  >
-                    Delete
-                  </button>
+                  <button onClick={() => { setEditingId(lead._id); setEditDraft({ title: lead.title || '', description: lead.description || '', status: lead.status || 'New', value: lead.value || '' }); }}>Edit</button>
+                  <button onClick={() => deleteLead(lead._id)}>Delete</button>
                 </div>
                 <small>Created: {new Date(lead.createdAt).toLocaleDateString()}</small>
               </>

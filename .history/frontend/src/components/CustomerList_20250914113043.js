@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerList = ({ customers, onSelectCustomer, onCustomersChange, searchTerm, onSearchChange }) => {
   const navigate = useNavigate();
@@ -120,32 +120,22 @@ const CustomerList = ({ customers, onSelectCustomer, onCustomersChange, searchTe
                   onChange={(e) => setEditDraft({ ...editDraft, company: e.target.value })}
                 />
                 <div className="actions">
-                  <button 
-                    className="btn btn-success btn-sm"
-                    onClick={async () => {
-                      try {
-                        const token = localStorage.getItem('token');
-                        const res = await fetch(`/api/customers/${customer._id}`, {
-                          method: 'PUT',
-                          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                          body: JSON.stringify(editDraft)
-                        });
-                        if (!res.ok) throw new Error('Failed to update customer');
-                        setEditingId(null);
-                        onCustomersChange();
-                      } catch (err) {
-                        alert(err.message);
-                      }
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button 
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => setEditingId(null)}
-                  >
-                    Cancel
-                  </button>
+                  <button onClick={async () => {
+                    try {
+                      const token = localStorage.getItem('token');
+                      const res = await fetch(`/api/customers/${customer._id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify(editDraft)
+                      });
+                      if (!res.ok) throw new Error('Failed to update customer');
+                      setEditingId(null);
+                      onCustomersChange();
+                    } catch (err) {
+                      alert(err.message);
+                    }
+                  }}>Save</button>
+                  <button onClick={() => setEditingId(null)}>Cancel</button>
                 </div>
               </div>
             ) : (
@@ -155,34 +145,21 @@ const CustomerList = ({ customers, onSelectCustomer, onCustomersChange, searchTe
                 <p>{customer.company}</p>
                 <p>{customer.phone}</p>
                 <div className="actions" onClick={(e) => e.stopPropagation()}>
-                  <Link to={`/customers/${customer._id}`} className="btn btn-primary btn-sm">
-                    View Details
-                  </Link>
-                  <button 
-                    className="btn btn-warning btn-sm"
-                    onClick={() => { setEditingId(customer._id); setEditDraft({ name: customer.name || '', email: customer.email || '', phone: customer.phone || '', company: customer.company || '' }); }}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    className="btn btn-danger btn-sm"
-                    onClick={async () => {
-                      if (!window.confirm('Delete this customer? This also removes related leads.')) return;
-                      try {
-                        const token = localStorage.getItem('token');
-                        const res = await fetch(`/api/customers/${customer._id}`, {
-                          method: 'DELETE',
-                          headers: { 'Authorization': `Bearer ${token}` }
-                        });
-                        if (!res.ok) throw new Error('Failed to delete customer');
-                        onCustomersChange();
-                      } catch (err) {
-                        alert(err.message);
-                      }
-                    }}
-                  >
-                    Delete
-                  </button>
+                  <button onClick={() => { setEditingId(customer._id); setEditDraft({ name: customer.name || '', email: customer.email || '', phone: customer.phone || '', company: customer.company || '' }); }}>Edit</button>
+                  <button onClick={async () => {
+                    if (!window.confirm('Delete this customer? This also removes related leads.')) return;
+                    try {
+                      const token = localStorage.getItem('token');
+                      const res = await fetch(`/api/customers/${customer._id}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                      });
+                      if (!res.ok) throw new Error('Failed to delete customer');
+                      onCustomersChange();
+                    } catch (err) {
+                      alert(err.message);
+                    }
+                  }}>Delete</button>
                 </div>
               </>
             )}

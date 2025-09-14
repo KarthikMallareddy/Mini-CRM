@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -15,19 +14,18 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
     setIsLoading(true);
     
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Registration failed');
-      setSuccess('Registration successful! Redirecting to login...');
-      setTimeout(() => navigate('/login'), 2000);
+      if (!res.ok) throw new Error(data.message || 'Login failed');
+      localStorage.setItem('token', data.token);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -39,25 +37,11 @@ const Register = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-header">
-          <h1 className="auth-title">Create Account</h1>
-          <p className="auth-subtitle">Join our CRM platform and start managing your customers</p>
+          <h1 className="auth-title">Welcome Back</h1>
+          <p className="auth-subtitle">Sign in to your CRM account to continue</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label className="form-label" htmlFor="name">Full Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              className="form-input"
-              placeholder="Enter your full name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <div className="form-group">
             <label className="form-label" htmlFor="email">Email Address</label>
             <input
@@ -79,11 +63,10 @@ const Register = () => {
               name="password"
               type="password"
               className="form-input"
-              placeholder="Create a password (min 6 characters)"
+              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
               required
-              minLength="6"
             />
           </div>
 
@@ -95,10 +78,10 @@ const Register = () => {
             {isLoading ? (
               <>
                 <div className="spinner"></div>
-                Creating Account...
+                Signing In...
               </>
             ) : (
-              'Create Account'
+              'Sign In'
             )}
           </button>
         </form>
@@ -108,19 +91,13 @@ const Register = () => {
             {error}
           </div>
         )}
-        
-        {success && (
-          <div className="alert alert-success">
-            {success}
-          </div>
-        )}
 
         <div className="auth-toggle">
-          Already have an account? <Link to="/login">Sign in here</Link>
+          Don't have an account? <Link to="/register">Create one here</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default Login;

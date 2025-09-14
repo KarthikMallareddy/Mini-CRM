@@ -14,7 +14,6 @@ const LeadList = ({ customerId }) => {
   const [editingId, setEditingId] = useState(null);
   const [editDraft, setEditDraft] = useState({ title: '', description: '', status: 'New', value: '' });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (customerId) {
       fetchLeads();
