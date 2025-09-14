@@ -138,13 +138,6 @@
   padding: 0 var(--spacing-lg);
 }
 
-/* Wider container specifically for Reports page */
-.reports .container {
-  max-width: 95vw;
-  width: 100%;
-  padding: 0 var(--spacing-md);
-}
-
 .dashboard-header {
   text-align: center;
   margin-bottom: var(--spacing-2xl);
@@ -324,13 +317,6 @@
   grid-template-columns: 1fr 400px;
   gap: var(--spacing-xl);
   align-items: start;
-}
-
-/* Full width dashboard content for Reports page */
-.reports .dashboard-content {
-  display: block;
-  width: 100%;
-  max-width: none;
 }
 
 @media (max-width: 1024px) {
@@ -945,23 +931,14 @@
 
 .reports .list li {
   color: var(--gray-800);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: var(--spacing-md);
   border-bottom: 1px solid rgba(203, 213, 225, 0.6);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
   border-radius: var(--border-radius-sm);
-  margin-bottom: var(--spacing-sm);
-  min-height: 45px; /* Consistent item height */
-}
-
-/* Enhanced spacing for better visual balance */
-.reports .list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  height: 100%;
+  margin-bottom: var(--spacing-xs);
 }
 
 .reports .list li:hover {
@@ -1083,40 +1060,19 @@
 
 .reports-grid-symmetric .card {
   height: fit-content;
-  min-height: 400px; /* Increased minimum height for consistency */
-  width: 100%;
-  overflow: hidden; /* Prevent content overflow */
-  display: flex;
-  flex-direction: column;
-}
-
-.reports-grid-symmetric .card-header {
-  flex-shrink: 0; /* Header doesn't shrink */
+  min-height: 300px; /* Ensures consistent minimum height */
 }
 
 .reports-grid-symmetric .card-body {
-  overflow-x: visible; /* Remove horizontal scroll */
-  min-height: 300px; /* Increased content area height */
-  padding: var(--spacing-lg);
-  flex-grow: 1; /* Body takes remaining space */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  overflow-x: auto;
+  min-height: 200px; /* Consistent content area height */
 }
 
 /* Ensure tables in the grid maintain proper layout */
 .reports-grid-symmetric table {
   width: 100%;
-  table-layout: fixed; /* Fixed layout for better control */
+  table-layout: auto;
   min-width: 100%;
-  border-collapse: collapse;
-}
-
-.reports-grid-symmetric table th,
-.reports-grid-symmetric table td {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  padding: var(--spacing-sm) var(--spacing-xs);
 }
 
 /* Mobile responsive - stack cards vertically */

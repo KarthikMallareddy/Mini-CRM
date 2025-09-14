@@ -945,23 +945,14 @@
 
 .reports .list li {
   color: var(--gray-800);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: var(--spacing-md);
   border-bottom: 1px solid rgba(203, 213, 225, 0.6);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
   border-radius: var(--border-radius-sm);
-  margin-bottom: var(--spacing-sm);
-  min-height: 45px; /* Consistent item height */
-}
-
-/* Enhanced spacing for better visual balance */
-.reports .list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  height: 100%;
+  margin-bottom: var(--spacing-xs);
 }
 
 .reports .list li:hover {

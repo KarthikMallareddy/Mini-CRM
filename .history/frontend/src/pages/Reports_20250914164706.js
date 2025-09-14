@@ -211,9 +211,8 @@ const Reports = () => {
         </div>
 
         <div className="dashboard-content">
-          {/* Symmetric 2x2 Grid Layout */}
-          <div className="reports-grid-symmetric">
-            {/* Top Row */}
+          {/* Simple summaries instead of charts */}
+          <div className="grid grid-cols-2 gap-xl">
             <div className="card glass-interactive hover-lift">
               <div className="card-header">
                 <h3>Leads by Status</h3>
@@ -265,8 +264,10 @@ const Reports = () => {
                 </ul>
               </div>
             </div>
+          </div>
 
-            {/* Bottom Row */}
+          {/* Summary Tables */}
+          <div className="grid grid-cols-2 gap-xl">
             <div className="card glass-interactive hover-lift">
               <div className="card-header">
                 <h3>Lead Status Breakdown</h3>
