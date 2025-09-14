@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const LeadList = ({ customerId }) => {
   const [leads, setLeads] = useState([]);
@@ -19,7 +19,7 @@ const LeadList = ({ customerId }) => {
     if (customerId) {
       fetchLeads();
     }
-  }, [customerId, fetchLeads]);
+  }, [customerId]);
 
   useEffect(() => {
     if (statusFilter === 'All') {
@@ -44,10 +44,11 @@ const LeadList = ({ customerId }) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // refetch when filter changes
     if (customerId) fetchLeads();
-  }, [statusFilter, customerId, fetchLeads]);
+  }, [statusFilter]);
 
   const handleAddLead = async (e) => {
     e.preventDefault();

@@ -373,7 +373,9 @@ p {
   padding: var(--spacing-md) var(--spacing-lg);
   vertical-align: middle;
   position: relative;
-  color: var(--gray-800);
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
 }
 
 .table-modern tbody tr:last-child td {

@@ -147,7 +147,7 @@
   font-size: var(--font-size-4xl);
   font-weight: 800;
   color: white;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -306,11 +306,11 @@
 
 /* Customer List Styles */
 .customer-list {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   border-radius: var(--border-radius-xl);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   overflow: hidden;
   position: relative;
 }
@@ -379,9 +379,9 @@
 }
 
 .customer-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--border-radius-xl);
   padding: var(--spacing-xl);
   transition: all 0.3s ease;
@@ -416,7 +416,8 @@
 .customer-card h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--gray-900);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.4);
   margin-bottom: var(--spacing-md);
   display: flex;
   align-items: center;
@@ -429,8 +430,9 @@
 }
 
 .customer-card p {
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--font-size-sm);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
@@ -512,7 +514,7 @@
 }
 
 .lead-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--border-radius-xl);
@@ -548,7 +550,8 @@
 .lead-card h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--gray-900);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.4);
   margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
@@ -561,8 +564,9 @@
 }
 
 .lead-card p {
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--font-size-sm);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;

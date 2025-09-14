@@ -147,7 +147,7 @@
   font-size: var(--font-size-4xl);
   font-weight: 800;
   color: white;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -561,8 +561,9 @@
 }
 
 .lead-card p {
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--font-size-sm);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;

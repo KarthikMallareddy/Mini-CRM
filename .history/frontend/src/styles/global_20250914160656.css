@@ -92,7 +92,6 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   position: relative;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 body::before {
@@ -115,8 +114,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
-  color: var(--gray-800);
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 h1 { font-size: var(--font-size-4xl); }
@@ -128,8 +125,7 @@ h6 { font-size: var(--font-size-md); }
 
 p {
   margin-bottom: var(--spacing-md);
-  color: var(--gray-700);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: var(--gray-600);
 }
 
 /* Button System */
@@ -245,14 +241,12 @@ p {
   border: 2px solid var(--gray-200);
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-md);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   color: var(--gray-900);
-  font-weight: 500;
   outline: none;
   min-height: 48px;
-  text-shadow: none;
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -292,6 +286,7 @@ p {
 .card-header h3 {
   color: var(--gray-800);
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .card-body {
@@ -373,7 +368,6 @@ p {
   padding: var(--spacing-md) var(--spacing-lg);
   vertical-align: middle;
   position: relative;
-  color: var(--gray-800);
 }
 
 .table-modern tbody tr:last-child td {
@@ -707,11 +701,6 @@ p {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.interactive:hover .stat-value,
-.interactive:hover .stat-label {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-}
-
 .interactive:active {
   transform: scale(0.98);
 }
@@ -720,15 +709,6 @@ p {
 .hover-lift:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.hover-lift:hover .stat-value,
-.hover-lift:hover .stat-label {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.hover-lift:hover h3 {
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .hover-scale:hover {
@@ -808,17 +788,6 @@ html {
   border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-5px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.glass-interactive:hover .stat-value,
-.glass-interactive:hover .stat-label {
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-  color: white;
-}
-
-.glass-interactive:hover h3 {
-  color: var(--gray-900);
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 /* 3D Tilt Effect */

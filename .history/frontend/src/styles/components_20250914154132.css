@@ -5,6 +5,37 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  right: -50px;
+  bottom: -50px;
+  background: linear-gradient(45deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 30px;
+  filter: blur(20px);
+  animation: morphShape 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes morphShape {
+  0%, 100% { 
+    border-radius: 30px 70px 50px 90px; 
+    transform: rotate(0deg) scale(1);
+  }
+  25% { 
+    border-radius: 70px 30px 90px 50px; 
+    transform: rotate(90deg) scale(1.05);
+  }
+  50% { 
+    border-radius: 50px 90px 30px 70px; 
+    transform: rotate(180deg) scale(0.95);
+  }
+  75% { 
+    border-radius: 90px 50px 70px 30px; 
+    transform: rotate(270deg) scale(1.02);
+  }
+}nt(135deg, #667eea 0%, #764ba2 100%);
   padding: var(--spacing-lg);
   position: relative;
 }
@@ -146,8 +177,10 @@
 .dashboard-title {
   font-size: var(--font-size-4xl);
   font-weight: 800;
-  color: white;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -163,45 +196,6 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-xl);
   margin-bottom: var(--spacing-2xl);
-  position: relative;
-}
-
-/* Morphing Background Shape */
-.stats-grid::before {
-  content: '';
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  right: -50px;
-  bottom: -50px;
-  background: linear-gradient(45deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
-    rgba(255, 255, 255, 0.1) 100%);
-  border-radius: 30px;
-  filter: blur(20px);
-  animation: morphShape 8s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes morphShape {
-  0%, 100% { 
-    border-radius: 30px 70px 50px 90px; 
-    transform: rotate(0deg) scale(1);
-  }
-  25% { 
-    border-radius: 70px 30px 90px 50px; 
-    transform: rotate(90deg) scale(1.05);
-  }
-  50% { 
-    border-radius: 50px 90px 30px 70px; 
-    transform: rotate(180deg) scale(0.95);
-  }
-  75% { 
-    border-radius: 90px 50px 70px 30px; 
-    transform: rotate(270deg) scale(1.02);
-  }
 }
 
 .stat-card {

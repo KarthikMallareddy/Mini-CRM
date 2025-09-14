@@ -92,7 +92,6 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   position: relative;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 body::before {
@@ -245,14 +244,12 @@ p {
   border: 2px solid var(--gray-200);
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-md);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   color: var(--gray-900);
-  font-weight: 500;
   outline: none;
   min-height: 48px;
-  text-shadow: none;
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -292,6 +289,7 @@ p {
 .card-header h3 {
   color: var(--gray-800);
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .card-body {
@@ -373,7 +371,6 @@ p {
   padding: var(--spacing-md) var(--spacing-lg);
   vertical-align: middle;
   position: relative;
-  color: var(--gray-800);
 }
 
 .table-modern tbody tr:last-child td {

@@ -1,0 +1,37 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Navbar, CustomerDetail } from './components';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Reports from './pages/Reports';
+import { useAuth } from './context/AuthContext';
+
+function App() {
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route 
+          path="/dashboard" 
+          element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/customers/:id" 
+          element={isAuthenticated ? <CustomerDetail /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/reports" 
+          element={isAuthenticated ? <Reports /> : <Navigate to="/login" />} 
+        />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;

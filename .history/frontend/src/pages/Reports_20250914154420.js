@@ -3,7 +3,18 @@ import React, { useState, useEffect } from 'react';
 // Interactive effects
 const createInteractiveEffects = () => {
   const handleMouseMove = (e) => {
-    // Dynamic background gradient following mouse (keeping this cool effect)
+    // Cursor trail
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    trail.style.left = e.clientX - 10 + 'px';
+    trail.style.top = e.clientY - 10 + 'px';
+    document.body.appendChild(trail);
+    
+    setTimeout(() => {
+      trail.remove();
+    }, 1000);
+    
+    // Dynamic background gradient following mouse
     const x = (e.clientX / window.innerWidth) * 100;
     const y = (e.clientY / window.innerHeight) * 100;
     document.documentElement.style.setProperty('--mouse-x', x + '%');
@@ -28,11 +39,6 @@ const Reports = () => {
 
   useEffect(() => {
     fetchReportsData();
-    
-    // Initialize interactive effects
-    const cleanupEffects = createInteractiveEffects();
-    
-    return cleanupEffects;
   }, []);
 
   const fetchReportsData = async () => {
@@ -179,151 +185,149 @@ const Reports = () => {
       
       <div className="reports">
         <div className="container">
-        <div className="dashboard-header">
-          <h1 className="dashboard-title">Analytics & Reports</h1>
+        <div className="reports-header">
+          <h1>Analytics & Reports</h1>
           <p className="text-muted">
             Insights into your customer relationships and business performance
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="stats-grid stagger-children">
-          <div className="stat-card glass-interactive hover-lift">
+        <div className="stats-grid">
+          <div className="stat-card">
             <div className="stat-icon customers">👥</div>
             <div className="stat-value">{stats.totalCustomers}</div>
             <div className="stat-label">Total Customers</div>
           </div>
-          <div className="stat-card glass-interactive hover-lift">
+          <div className="stat-card">
             <div className="stat-icon leads">📊</div>
             <div className="stat-value">{stats.totalLeads}</div>
             <div className="stat-label">Total Leads</div>
           </div>
-          <div className="stat-card glass-interactive hover-lift">
+          <div className="stat-card">
             <div className="stat-icon revenue">💰</div>
             <div className="stat-value">${stats.totalRevenue.toLocaleString()}</div>
             <div className="stat-label">Total Revenue</div>
           </div>
-          <div className="stat-card glass-interactive hover-lift">
+          <div className="stat-card">
             <div className="stat-icon customers">✅</div>
             <div className="stat-value">{stats.leadsByStatus.Converted || 0}</div>
             <div className="stat-label">Converted Leads</div>
           </div>
         </div>
 
-        <div className="dashboard-content">
-          {/* Simple summaries instead of charts */}
-          <div className="grid grid-cols-2 gap-xl">
-            <div className="card glass-interactive hover-lift">
-              <div className="card-header">
-                <h3>Leads by Status</h3>
-              </div>
-              <div className="card-body">
-                <ul className="list">
-                  {leadStatusEntries.map(([status, count]) => (
-                    <li key={status} className="flex justify-between p-sm border-b">
-                      <span className={`badge badge-${status.toLowerCase()}`}>{status}</span>
-                      <span>{count}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Simple summaries instead of charts */}
+        <div className="grid grid-cols-2 gap-xl">
+          <div className="card">
+            <div className="card-header">
+              <h3>Leads by Status</h3>
             </div>
-
-            <div className="card glass-interactive hover-lift">
-              <div className="card-header">
-                <h3>Highlights</h3>
-              </div>
-              <div className="card-body">
-                <ul className="list">
-                  <li className="flex justify-between p-sm border-b">
-                    <span>Best Month (Revenue)</span>
-                    <span>
-                      {monthlyRows.length
-                        ? monthlyRows.reduce((a, b) => (a.revenue > b.revenue ? a : b)).month
-                        : '-'}
-                    </span>
+            <div className="card-body">
+              <ul className="list">
+                {leadStatusEntries.map(([status, count]) => (
+                  <li key={status} className="flex justify-between p-sm border-b">
+                    <span className={`badge badge-${status.toLowerCase()}`}>{status}</span>
+                    <span>{count}</span>
                   </li>
-                  <li className="flex justify-between p-sm border-b">
-                    <span>Average Revenue</span>
-                    <span>
-                      ${monthlyRows.length
-                        ? Math.round(
-                            monthlyRows.reduce((s, r) => s + r.revenue, 0) / monthlyRows.length
-                          ).toLocaleString()
-                        : 0}
-                    </span>
-                  </li>
-                  <li className="flex justify-between p-sm">
-                    <span>Top Lead Status</span>
-                    <span>
-                      {leadStatusEntries.length
-                        ? leadStatusEntries.reduce((a, b) => (a[1] > b[1] ? a : b))[0]
-                        : '-'}
-                    </span>
-                  </li>
-                </ul>
-              </div>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* Summary Tables */}
-          <div className="grid grid-cols-2 gap-xl">
-            <div className="card glass-interactive hover-lift">
-              <div className="card-header">
-                <h3>Lead Status Breakdown</h3>
-              </div>
-              <div className="card-body">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-left p-sm border-b">Status</th>
-                      <th className="text-right p-sm border-b">Count</th>
-                      <th className="text-right p-sm border-b">Percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leadStatusEntries.map(([status, count]) => (
-                      <tr key={status}>
-                        <td className="p-sm border-b">
-                          <span className={`badge badge-${status.toLowerCase()}`}>
-                            {status}
-                          </span>
-                        </td>
-                        <td className="text-right p-sm border-b">{count}</td>
-                        <td className="text-right p-sm border-b">
-                          {stats.totalLeads > 0 ? Math.round((count / stats.totalLeads) * 100) : 0}%
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          <div className="card">
+            <div className="card-header">
+              <h3>Highlights</h3>
             </div>
+            <div className="card-body">
+              <ul className="list">
+                <li className="flex justify-between p-sm border-b">
+                  <span>Best Month (Revenue)</span>
+                  <span>
+                    {monthlyRows.length
+                      ? monthlyRows.reduce((a, b) => (a.revenue > b.revenue ? a : b)).month
+                      : '-'}
+                  </span>
+                </li>
+                <li className="flex justify-between p-sm border-b">
+                  <span>Average Revenue</span>
+                  <span>
+                    ${monthlyRows.length
+                      ? Math.round(
+                          monthlyRows.reduce((s, r) => s + r.revenue, 0) / monthlyRows.length
+                        ).toLocaleString()
+                      : 0}
+                  </span>
+                </li>
+                <li className="flex justify-between p-sm">
+                  <span>Top Lead Status</span>
+                  <span>
+                    {leadStatusEntries.length
+                      ? leadStatusEntries.reduce((a, b) => (a[1] > b[1] ? a : b))[0]
+                      : '-'}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-            <div className="card glass-interactive hover-lift">
-              <div className="card-header">
-                <h3>Monthly Performance</h3>
-              </div>
-              <div className="card-body">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-left p-sm border-b">Month</th>
-                      <th className="text-right p-sm border-b">Customers</th>
-                      <th className="text-right p-sm border-b">Revenue</th>
+        {/* Summary Tables */}
+        <div className="grid grid-cols-2 gap-xl">
+          <div className="card">
+            <div className="card-header">
+              <h3>Lead Status Breakdown</h3>
+            </div>
+            <div className="card-body">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="text-left p-sm border-b">Status</th>
+                    <th className="text-right p-sm border-b">Count</th>
+                    <th className="text-right p-sm border-b">Percentage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leadStatusEntries.map(([status, count]) => (
+                    <tr key={status}>
+                      <td className="p-sm border-b">
+                        <span className={`badge badge-${status.toLowerCase()}`}>
+                          {status}
+                        </span>
+                      </td>
+                      <td className="text-right p-sm border-b">{count}</td>
+                      <td className="text-right p-sm border-b">
+                        {stats.totalLeads > 0 ? Math.round((count / stats.totalLeads) * 100) : 0}%
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {monthlyRows.map((row) => (
-                      <tr key={row.month}>
-                        <td className="p-sm border-b">{row.month}</td>
-                        <td className="text-right p-sm border-b">{row.customers}</td>
-                        <td className="text-right p-sm border-b">${row.revenue.toLocaleString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-header">
+              <h3>Monthly Performance</h3>
+            </div>
+            <div className="card-body">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="text-left p-sm border-b">Month</th>
+                    <th className="text-right p-sm border-b">Customers</th>
+                    <th className="text-right p-sm border-b">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {monthlyRows.map((row) => (
+                    <tr key={row.month}>
+                      <td className="p-sm border-b">{row.month}</td>
+                      <td className="text-right p-sm border-b">{row.customers}</td>
+                      <td className="text-right p-sm border-b">${row.revenue.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

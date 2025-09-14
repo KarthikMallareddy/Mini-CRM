@@ -4,7 +4,18 @@ import { CustomerList, LeadList } from '../components';
 // Interactive effects
 const createInteractiveEffects = () => {
   const handleMouseMove = (e) => {
-    // Dynamic background gradient following mouse (keeping this cool effect)
+    // Cursor trail
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    trail.style.left = e.clientX - 10 + 'px';
+    trail.style.top = e.clientY - 10 + 'px';
+    document.body.appendChild(trail);
+    
+    setTimeout(() => {
+      trail.remove();
+    }, 1000);
+    
+    // Dynamic background gradient following mouse
     const x = (e.clientX / window.innerWidth) * 100;
     const y = (e.clientY / window.innerHeight) * 100;
     document.documentElement.style.setProperty('--mouse-x', x + '%');
