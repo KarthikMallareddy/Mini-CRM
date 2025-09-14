@@ -2,27 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { CustomerList, LeadList } from '../components';
 
 const Dashboard = () => {
-  const [customers, setCustomers] = useState([]); 
+  const [customers, setCustomers] = useState([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchCustomers();
-  }, [page, searchTerm]);
+  }, [page]);
 
   const fetchCustomers = async () => {
     try {
       const token = localStorage.getItem('token');
-  const params = new URLSearchParams();
-  params.set('page', String(page));
-  params.set('limit', String(limit));
-  if (searchTerm) params.set('search', searchTerm);
-  const res = await fetch(`/api/customers?${params.toString()}`, {
+      const res = await fetch(`/api/customers?page=${page}&limit=${limit}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!res.ok) throw new Error('Failed to fetch customers');
@@ -49,8 +44,6 @@ const Dashboard = () => {
             customers={customers} 
             onSelectCustomer={setSelectedCustomer}
             onCustomersChange={fetchCustomers}
-            searchTerm={searchTerm}
-            onSearchChange={(v) => { setPage(1); setSearchTerm(v); }}
           />
           <div className="pagination">
             <button disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Prev</button>

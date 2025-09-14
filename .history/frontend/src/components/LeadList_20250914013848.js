@@ -11,8 +11,6 @@ const LeadList = ({ customerId }) => {
     status: 'New',
     value: ''
   });
-  const [editingId, setEditingId] = useState(null);
-  const [editDraft, setEditDraft] = useState({ title: '', description: '', status: 'New', value: '' });
 
   useEffect(() => {
     if (customerId) {
@@ -88,21 +86,6 @@ const LeadList = ({ customerId }) => {
     }
   };
 
-  const deleteLead = async (leadId) => {
-    if (!window.confirm('Delete this lead?')) return;
-    try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/leads/${leadId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!res.ok) throw new Error('Failed to delete lead');
-      fetchLeads();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
   return (
     <div className="lead-list">
       <div className="lead-list-header">
@@ -161,76 +144,21 @@ const LeadList = ({ customerId }) => {
       <div className="leads-grid">
         {filteredLeads.map(lead => (
           <div key={lead._id} className="lead-card">
-            {editingId === lead._id ? (
-              <div className="lead-edit-form">
-                <input
-                  type="text"
-                  placeholder="Lead Title"
-                  value={editDraft.title}
-                  onChange={(e) => setEditDraft({ ...editDraft, title: e.target.value })}
-                />
-                <textarea
-                  placeholder="Description"
-                  value={editDraft.description}
-                  onChange={(e) => setEditDraft({ ...editDraft, description: e.target.value })}
-                />
-                <input
-                  type="number"
-                  placeholder="Value"
-                  value={editDraft.value}
-                  onChange={(e) => setEditDraft({ ...editDraft, value: e.target.value })}
-                />
-                <select
-                  value={editDraft.status}
-                  onChange={(e) => setEditDraft({ ...editDraft, status: e.target.value })}
-                >
-                  <option value="New">New</option>
-                  <option value="Contacted">Contacted</option>
-                  <option value="Converted">Converted</option>
-                  <option value="Lost">Lost</option>
-                </select>
-                <div className="actions">
-                  <button onClick={async () => {
-                    try {
-                      const token = localStorage.getItem('token');
-                      const res = await fetch(`/api/leads/${lead._id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                        body: JSON.stringify(editDraft)
-                      });
-                      if (!res.ok) throw new Error('Failed to update lead');
-                      setEditingId(null);
-                      fetchLeads();
-                    } catch (err) {
-                      alert(err.message);
-                    }
-                  }}>Save</button>
-                  <button onClick={() => setEditingId(null)}>Cancel</button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <h3>{lead.title}</h3>
-                <p>{lead.description}</p>
-                <p>Value: ${lead.value}</p>
-                <div className="lead-status">
-                  <select
-                    value={lead.status}
-                    onChange={(e) => updateLeadStatus(lead._id, e.target.value)}
-                  >
-                    <option value="New">New</option>
-                    <option value="Contacted">Contacted</option>
-                    <option value="Converted">Converted</option>
-                    <option value="Lost">Lost</option>
-                  </select>
-                </div>
-                <div className="actions">
-                  <button onClick={() => { setEditingId(lead._id); setEditDraft({ title: lead.title || '', description: lead.description || '', status: lead.status || 'New', value: lead.value || '' }); }}>Edit</button>
-                  <button onClick={() => deleteLead(lead._id)}>Delete</button>
-                </div>
-                <small>Created: {new Date(lead.createdAt).toLocaleDateString()}</small>
-              </>
-            )}
+            <h3>{lead.title}</h3>
+            <p>{lead.description}</p>
+            <p>Value: ${lead.value}</p>
+            <div className="lead-status">
+              <select
+                value={lead.status}
+                onChange={(e) => updateLeadStatus(lead._id, e.target.value)}
+              >
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Converted">Converted</option>
+                <option value="Lost">Lost</option>
+              </select>
+            </div>
+            <small>Created: {new Date(lead.createdAt).toLocaleDateString()}</small>
           </div>
         ))}
       </div>

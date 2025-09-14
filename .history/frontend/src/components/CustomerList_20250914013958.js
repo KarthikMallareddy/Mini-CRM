@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const CustomerList = ({ customers, onSelectCustomer, onCustomersChange, searchTerm, onSearchChange }) => {
-  const navigate = useNavigate();
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [newCustomer, setNewCustomer] = useState({
@@ -90,7 +88,7 @@ const CustomerList = ({ customers, onSelectCustomer, onCustomersChange, searchTe
           <div 
             key={customer._id}
             className="customer-card"
-            onClick={() => onSelectCustomer ? onSelectCustomer(customer) : navigate(`/customers/${customer._id}`)}
+            onClick={() => onSelectCustomer(customer)}
           >
             {editingId === customer._id ? (
               <div className="customer-edit-form" onClick={(e) => e.stopPropagation()}>
