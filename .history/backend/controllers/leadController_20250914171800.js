@@ -75,12 +75,11 @@ export const updateLead = async (req, res) => {
   }
 };
 
-// Delete lead - supports both nested and direct routes
+// Delete lead
 export const deleteLead = async (req, res) => {
   try {
-    // Support both /api/leads/:id and /api/customers/:customerId/leads/:leadId
-    const leadId = req.params.leadId || req.params.id;
-    const lead = await Lead.findById(leadId);
+    const { id } = req.params;
+    const lead = await Lead.findById(id);
     if (!lead) return res.status(404).json({ message: "Lead not found" });
 
     const customer = await Customer.findById(lead.customerId);
@@ -90,7 +89,7 @@ export const deleteLead = async (req, res) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    await Lead.findByIdAndDelete(leadId);
+    await Lead.findByIdAndDelete(id);
     res.json({ message: "Lead deleted" });
   } catch (err) {
     console.error("deleteLead:", err);

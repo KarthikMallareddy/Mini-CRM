@@ -44,17 +44,4 @@ router.put("/:id", protect, validateRequest(customerUpdateSchema), updateCustome
 // Delete customer
 router.delete("/:id", protect, deleteCustomer);
 
-// Nested lead routes under customers
-// Get leads for a customer
-router.get("/:customerId/leads", protect, getLeadsForCustomer);
-
-// Add lead under customer
-router.post("/:customerId/leads", protect, validateRequest(leadSchema), createLeadForCustomer);
-
-// Update lead
-router.put("/:customerId/leads/:leadId", protect, validateRequest(leadUpdateSchema), updateLead);
-
-// Delete lead
-router.delete("/:customerId/leads/:leadId", protect, deleteLead);
-
 export default router;
